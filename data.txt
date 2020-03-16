@@ -1,0 +1,233 @@
+--1703010210-创建数据库
+create database fuy_school;
+	use fuy_school;
+--1703010210-创建表
+create table fuy_department(
+	dep_name varchar(30) primary key
+);
+create table fuy_major(
+	major_name varchar(30) primary key,
+	major_length int(1) not null,
+	dep_name varchar(30) not null,
+	foreign key(dep_name) references fuy_department(dep_name)
+	on delete cascade
+	on update cascade
+);
+create table fuy_class(
+	stu_class varchar(30) primary key,
+	sut_year char(4) not null,
+	major_name varchar(30) not null,
+	foreign key(major_name) references fuy_major(major_name)
+	on delete cascade
+	on update cascade
+);
+create table fuy_teacher(
+	te_id char(10) primary key,
+	te_name varchar(10) not null,
+	te_pa char(32) not null,
+	dep_name varchar(20) not null,
+	foreign key(dep_name) references fuy_department(dep_name)
+	on delete cascade
+	on update cascade
+);
+create table fuy_student(
+	stu_id char(10)  primary key,
+	stu_name varchar(8) not null,
+	stu_pa char(32) not null,
+	stu_class varchar(30) not null,
+	foreign key(stu_class) references fuy_class(stu_class)
+	on delete cascade
+	on update cascade
+);
+create table fuy_course(
+	c_id int auto_increment primary key,
+	c_code char(7) not null,
+	c_name varchar(30) not null,
+	c_grade int(4) not null,
+	major_name varchar(30) not null,
+	c_term int(1) not null,
+	c_point float not null,
+	c_weekh float not null,
+	c_week char(5) not null,
+	c_totalh float not null,
+	c_type varchar(12) not null,
+	c_exam varchar(12) not null,
+	foreign key(major_name) references fuy_major(major_name)
+	on delete cascade
+	on update cascade
+);
+create table fuy_task(
+	task_id int auto_increment primary key,
+	te_id char(10) not null,
+	c_id int  not null,
+	stu_class varchar(30) not null,
+	task_term char(6) not null,
+	task_time varchar(50) not null,
+	task_room varchar(30) not null,
+	foreign key(te_id) references fuy_teacher(te_id)
+	on delete cascade
+	on update cascade,
+	foreign key(c_id) references fuy_course(c_id)
+	on delete cascade
+	on update cascade,
+	foreign key(stu_class) references fuy_class(stu_class)
+	on delete cascade
+	on update cascade
+);
+create table fuy_scores(
+	sc_id int auto_increment primary key,
+	task_id int  not null,
+	stu_id char(10) not null,
+	sc_normal float not null,
+	sc_lab float not null,
+	sc_final float not null,
+	sc_overall float not null,
+	sc_makeup float not null,
+	sc_again float not null,
+	foreign key(task_id) references fuy_task(task_id)
+	on delete cascade
+	on update cascade,
+	foreign key(stu_id) references fuy_student(stu_id)
+	on delete cascade
+	on update cascade
+);
+-- 1703010210-插入数据
+insert into fuy_department
+	values
+	('计算机学院'),
+	('外语学院'),
+	('数媒学院'),
+	('交还学院'),
+	('电通学院'),
+	('软件学院'),
+	('财经学院'),
+	('管理学院');
+insert into fuy_major
+	values
+	('网络技术安全',3,'计算机学院'),
+	('网络安全管理',3,'计算机学院'),
+	('计算机应用技术专业',3,'计算机学院'),
+	('旅游英语专业',3,'外语学院'),	
+	('软件技术专业',3,'软件学院'),	
+	('基础会计专业',3,'财经学院'),
+	('物流管理专业',3,'管理学院');
+insert into fuy_class
+	values('计算机应用3-2班','2017','计算机应用技术专业'),
+	('旅游英语3-1班','2017','旅游英语专业'),
+	('物流管理3-3班','2017','物流管理专业'),
+	('17计算机应用3-3班','2017','计算机应用技术专业'),
+	('17计算机应用3-1班','2017','计算机应用技术专业'),
+	('17软件技术3-1班','2017','软件技术专业'),
+	('计算机应用技术3-2班','2017','计算机应用技术专业'),
+	('17会计3-1班','2017','基础会计专业');
+insert into fuy_teacher
+	values
+	('1603010210','唐琪','101010','计算机学院'),
+	('1603010211','秦文','111111','计算机学院'),
+	('2008400035','王秀兰','123','软件学院'),
+	('2009500046','彭程','123','财经学院'),
+	('1603010212','桂荣枝','121212','计算机学院');
+insert into fuy_student
+	values
+			("1703010201","陈成武","123456","计算机应用3-2班"),
+			("1703010202","陈创禧","123456","计算机应用3-2班"),
+			("1703010203","陈德翔","123456","计算机应用3-2班"),
+			("1703010204","陈艺莎","123456","计算机应用3-2班"),
+			("1703010205","陈泽烽","123456","计算机应用3-2班"),
+			("1703010206","陈泽林","123456","计算机应用3-2班"),
+			("1703010207","戴静彤","123456","计算机应用3-2班"),
+			("1703010208","邓非凡","123456","计算机应用3-2班"),
+			("1703010209","冯浩湃","123456","计算机应用3-2班"),
+			("1703010210","傅月","123456","计算机应用3-2班"),
+			("1703010211","高永轩","123456","计算机应用3-2班"),
+			("1703010212","何劲逸","123456","计算机应用3-2班"),
+			("1703010213","黄惠雪","123456","计算机应用3-2班"),
+			("1703010214","黄佳平","123456","计算机应用3-2班"),
+			("1703010215","黄旭扬","123456","计算机应用3-2班"),
+			("1703010216","黄宇鹏","123456","计算机应用3-2班"),
+			("1703010217","黄梓仪","123456","计算机应用3-2班"),
+			("1703010218","李观洪","123456","计算机应用3-2班"),
+			("1703010219","李嘉润","123456","计算机应用3-2班"),
+			("1703010220","李力","123456","计算机应用3-2班"),
+			("1703010221","李鑫","123456","计算机应用3-2班"),
+			("1703010222","连丹玲","123456","计算机应用3-2班"),
+			("1703010223","廖彩英","123456","计算机应用3-2班"),
+			("1703010224","林洽鑫","123456","计算机应用3-2班"),
+			("1703010225","林秋延","123456","计算机应用3-2班"),
+			("1703010226","林思仰","123456","计算机应用3-2班"),
+			("1703010227","林晓静","123456","计算机应用3-2班"),
+			("1703010228","刘恒悦","123456","计算机应用3-2班"),
+			("1703010229","罗国锋","123456","计算机应用3-2班"),
+			("1703010230","彭素琴","123456","计算机应用3-2班"),
+			("1703010231","彭文豪","123456","计算机应用3-2班"),
+			("1703010232","邱永辉","123456","计算机应用3-2班"),
+			("1703010233","沈妙兰","123456","计算机应用3-2班"),
+			("1703010234","谭卓升","123456","计算机应用3-2班"),
+			("1703010236","王晓玲","123456","计算机应用3-2班"),
+			("1703010237","翁立权","123456","计算机应用3-2班"),
+			("1703010238","巫嘉欣","123456","计算机应用3-2班"),
+			("1703010239","吴奎麟","123456","计算机应用3-2班"),
+			("1703010240","叶志渭","123456","计算机应用3-2班"),
+			("1703010241","詹英豪","123456","计算机应用3-2班"),
+			("1703010242","张锦杭","123456","计算机应用3-2班"),
+			("1703010243","张奇浩","123456","计算机应用3-2班"),
+			("1703010244","赵军明","123456","计算机应用3-2班"),
+			("1703010245","郑会炜","123456","计算机应用3-2班"),
+			("1703010246","郑荣杰","123456","计算机应用3-2班"),
+			("1703010247","周海龙","123456","计算机应用3-2班"),
+			("1703010248","周佳丽","123456","计算机应用3-2班");
+insert into fuy_course
+	values
+	(1,'3001456','Web项目应用',2017,'计算机应用技术专业',4,3,4,'01-14',56,'专业核心课','过程性考核'),
+	(2,'4007845','C程序设计',2017,'软件技术专业',1,2,4,'01-18',72,'专业基础课','集中考试'),
+	(3,'2008564','基础会计',2017,'基础会计专业',2,2,4,'01-18',72,'专业基础课','集中考试');
+
+insert into fuy_task
+	values
+	(1,'1603010212',1,'17计算机应用3-1班','181902','周五1-4','知行楼7-501外'),
+	(2,'1603010212',1,'计算机应用技术3-2班','181902','周二1-4','知行楼7-501外'),
+	(3,'1603010212',1,'17计算机应用3-3班','181902','周四1-4','知行楼7-501外'),
+	(4,'2008400035',2,'17软件技术3-1班','171801','周三1-4','知行楼5-204外'),
+	(5,'2009500046',3,'17会计3-1班','171802','周二1-4','知行楼4-305外');
+--1703010210-查询现有的表
+	show tables;
+--1703010210-查询表的结构
+	describe fuy_student;
+--1703010210- 删除表 drop table xxx;
+
+--1703010210- 增加字段pic，保存图片
+alter table fuy_student add pic varchar(60)
+DEFAULT "../inc/upload/stu.png";
+alter table fuy_teacher add pic varchar(60)
+DEFAULT "../inc/upload/te.png";
+update fuy_student set pic = '../inc/upload/stu.png';
+	alter table fuy_student modify pic  varchar(100);
+
+--1703010210- 删除外间约束
+show create table fuy_scores;
+alter  table fuy_scores drop foreign key  fuy_scores_ibfk_2;
+-- 1703010210-修改表---主次都要
+alter table fuy_student modify stu_id int(10) unsigned;
+alter table fuy_scores modify stu_id int(10) unsigned;
+--1703010210- 添加约束
+alter table fuy_scores add foreign key(stu_id) references fuy_student(stu_id)
+	on delete cascade
+	on update cascade;
+-- 1703010210----教师
+	fuy_task_ibfk_1
+alter  table fuy_task drop foreign key fuy_task_ibfk_1;
+-- 1703010210-修改表---主次都要
+alter table fuy_teacher modify te_id int(10) unsigned;
+alter table fuy_task modify te_id int(10) unsigned;
+--1703010210- 添加约束
+alter table fuy_task add foreign key(te_id) references fuy_teacher(te_id)
+	on delete cascade
+	on update cascade;
+-- 1703010210-创建用户read，权限为select
+grant select on fuy_school.* to 'read'@'localhost' IDENTIFIED BY '12345678';
+	-- 1703010210-创建用户read，权限为update
+grant update on fuy_school.* to 'update'@'localhost' IDENTIFIED BY '12345678';
+	-- 1703010210-创建用户read，权限为delete
+grant delete on fuy_school.* to 'delete'@'localhost' IDENTIFIED BY '12345678';
+	-- 1703010210-创建用户read，权限为insert
+grant insert on fuy_school.* to 'insert'@'localhost' IDENTIFIED BY '12345678';

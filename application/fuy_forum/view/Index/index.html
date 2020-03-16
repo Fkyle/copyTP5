@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>首页</title>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="__CSS__/head.css">
+  <link rel="stylesheet" href="__CSS__/home.css">
+  <link rel="stylesheet" href="__CSS__/foot.css">
+</head>
+<style type="text/css">
+  .a {
+    background-color: #eee;
+  }
+</style>
+<script type="text/javascript">
+  window.onload = function () {
+    let oDiv = document.getElementById('share');
+    let oName = document.getElementsByClassName('welName')[0];
+    let haveActClass = document.getElementsByClassName('test')[0];
+    haveActClass.className +=' active'
+    oDiv.onmouseover = function (event) {
+      event.preventDefault();
+      startMove(0);
+    }
+    oDiv.onmouseout = function () {
+      startMove(-100);
+    }
+    if (oName.innerHTML.length <= 4) {
+      oName.style.display = 'none';
+    }
+    else {
+      oName.style.display = '';
+    }
+    // oName.onclick=function(){
+    //   alert(oName.innerHTML.length)
+    // }
+    // var allA = document.getElementById('head').getElementsByTagName('a');
+    // for (let i = 0; i < allA.length; i++) {
+    //     allA[i].onclick = function(){
+    //       for (let i = 0; i < allA.length; i++) {
+    //         allA[i].style.backgroundColor='#000';
+    //       }
+    //       this.style.backgroundColor ='#ccc';
+    //   }
+    // }
+
+  }
+  let timer = null;
+  function startMove(target) {
+    let oDiv = document.getElementById('share');
+    clearInterval(timer);
+    timer = setInterval(function () {
+      let iSpeed = null;
+      if (oDiv.offsetLeft < target) {
+        iSpeed = 10;
+      }
+      else { iSpeed = -10; }
+      if (oDiv.offsetLeft == target) {
+        clearInterval(timer)
+      }
+      else {
+        oDiv.style.left = oDiv.offsetLeft + iSpeed + 'px';
+      }
+    }, 30);
+  };
+  // var haveAct = document.getElementById('1').className='.active'
+  // haveAct.className += 'active'
+</script>
+
+<body>
+  <div class="header">
+    <div id="head" class="dropdown">
+      <ul class="main-nav">
+        <li><img src="__IMG__/logo2.png.jpg" width="60px" height="60px" title="ThinkPhp"></li>
+        <li>
+          <a href="{:url('fuy_forum/index/index')}">首页</a>
+        </li>
+        <li class="dropdownCss">
+          <a>论坛</a>
+          <div class="dropdown-contentCss">
+            {volist name='save' id = 'saveRow'}
+            <a href="{:url('fuy_forum/index/view',['sid'=>$saveRow.sid])}" style="color: yellowgreen">
+              {$saveRow.sname}
+            </a>
+            {/volist}
+          </div>
+        </li>
+        <li>
+          <a href="{:url('fuy_forum_admin/admin/alogin')}">帖子管理</a>
+        </li>
+        <li>
+          <a href="{:url('index/me')}">上传头像</a>
+        </li>
+        <li>
+          <a href="{:url('user/contact','sid=2&pid=1')}">联系我们</a>
+        </li>
+        <li>
+          <a href="{:url('index/changepa')}">修改密码</a>
+        </li>
+        <li>
+          <a>案例</a>
+        </li>
+      </ul>
+      <!-- 搜索栏 -->
+      <div class="search">
+        <input type="text" placeholder="搜索">
+        <input type="submit" class="btn btn-primary" value="搜索">
+      </div>
+      <!-- 登录 -->
+      <div class="dropdown user ">
+        <i class="welName" style='color:skyblue'>欢迎您：{$Think.session.name}</i>
+        <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">
+          <img src="__IMG__/portrait/{$Think.session.look}" style="width:14px;height:16px;">
+          <b class="glyphicon glyphicon-user"></b>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu1">
+          <li role="presentation" style="width: 100%">
+            <!-- <a role="menuitem" tabindex="-1" href="#"></a> -->
+            <a role="menuitem" tabindex="-1" href="{:url('fuy_forum/user/login')}">登录</a>
+          </li>
+          <li role="presentation" style="width: 100%">
+            <!-- <a role="menuitem" tabindex="-1" href="#">注册账号</a> -->
+            <a role="menuitem" tabindex="-1" href="{:url('fuy_forum/user/register')}">注册账号</a>
+          </li>
+          <li role="presentation" style="width: 100%">
+            <!-- <a role="menuitem" tabindex="-1" href="#">注册账号</a> -->
+            <a role="menuitem" tabindex="-1" href="{:url('index/logout')}">注销</a>
+          </li>
+        </ul>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+
+  <div class="home bg-warning">
+    <div id="share"
+      style="background-color: #eee;position: absolute;top: 300px;left:-100px;width: 100px;height: 200px;">
+      <ul style="list-style: none;margin-top:25px; line-height: 30px;">
+        <li>100</li>
+        <li>200</li>
+        <li>300</li>
+        <li>400</li>
+        <li>500</li>
+      </ul>
+      <span style="position: absolute;top: 60px;left:100px;text-align: center;background-color: skyblue">分享到</span>
+    </div>
+    <div class="main">
+      <div class="Rleft">
+        <div class="lt-1">
+          <img src="__IMG__/main1.jpg">
+        </div>
+        <div class="clear"></div>
+        <div class="lt-2">
+          <h3>推荐帖子</h3>
+          <!-- 轮播图 -->
+          <div id="tu_Area" class="carousel" data-ride='carousel'>
+            <div class="carousel-inner">
+              {volist name='reCarousel' id='reCarouselRow'}
+              <div class="item test" id={$reCarouselRow.cid}>
+                <a href="{:url('fuy_forum/index/detail',['mid'=>$reCarouselRow.mid])}"><img src="__IMG__/adv/{$reCarouselRow.cimg}" alt={$reCarouselRow.cid} style="width: 726px;height: 400px;"></a>
+                <h3 style="display: inline-block;">{$reCarouselRow.ctitle}</h3>
+                <h5 style="display: inline-block;float: right;">{$reCarouselRow.cback}</h5>
+              </div>
+              {/volist}
+            </div>
+            <!--1703010210-傅月-原点-->
+            <!-- <ol class="carousel-indicators">
+              <li data-target='#tu_Area' data-slide-to='0' class="active"></li>
+              <li data-target='#tu_Area' data-slide-to='1'></li>
+              <li data-target='#tu_Area' data-slide-to='2'></li>
+            </ol> -->
+            <!--1703010210-傅月-左右控制器-->
+            <a href="#tu_Area" class="left carousel-control" data-slide='prev'>
+              <span class='glyphicon glyphicon-chevron-left'></span>
+            </a>
+            <a href="#tu_Area" class="right carousel-control" data-slide='next'>
+              <span class='glyphicon glyphicon-chevron-right'></span>
+            </a>
+          </div>
+          <!-- /轮播图 -->
+        </div>
+        <div class="clear"></div>
+        <img src="__IMG__/main7.png" alt="">
+        <div class="lt-2">
+          <div class="lt-title">
+            <h3>TOP10话题</h3>
+            <ul>
+              {volist name='re' id='reRow'}
+              <li style="display: inline-block;font-size: 16px;font-weight: bold;padding-right: 20px;margin:0 auto">
+                <a href="{:url('fuy_forum/index/view',['sid'=>$reRow.sid])}">{$reRow.sname}</a>
+              </li>
+              {/volist}
+            </ul>
+          </div>
+          <div class="clear"></div>
+          <div class="list">
+            {volist name='topMes' id="topMesRow"}
+            <ul>
+              <li>
+                <a href="#">
+                  <span class="glyphicon glyphicon-chevron-right"></span>
+                  <span><a href="{:url('fuy_forum/index/detail',['mid'=>$topMesRow.mid])}">{$topMesRow.mtitle}</a></span>
+                  <span style="float: right;">
+                    <span class="text-primary">{$topMesRow.unick}</span>
+                    {$topMesRow.mcreateat | date="Y-m-d H:i:s",###}
+                  </span>
+
+                </a>
+              </li>
+            </ul>
+            {/volist}
+          </div>
+
+        </div>
+      </div>
+
+      <!--  -->
+      <div class="Rright">
+        <div class="right-top">
+          <strong>最新下载</strong>
+          <a href="#">更多>></a>
+        </div>
+
+        <div class="intro">
+          <ul>
+            <li><a href="#">ThinkPHP5.0.24核心板</a></li>
+            <li><a href="#">ThinkPHP5.0.24核心板</a></li>
+            <li><a href="#">ThinkPHP5.0.24核心板</a></li>
+            <li><a href="#">ThinkPHP5.0.24核心板</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="ft-main">
+      <div class="ft-col">
+        <h3>我们</h3>
+        <ul>
+          <li><a href="#">关于我们</a></li>
+          <li><a href="#">公司动态</a></li>
+          <li><a href="#">联系我们</a></li>
+          <li><a href="#">免责声明</a></li>
+          <li><a href="#">加入我们</a></li>
+          <li><a href="#">捐赠我们</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h3>合作</h3>
+        <ul>
+          <li><a href="#">技术培训</a></li>
+          <li><a href="#">广告合作</a></li>
+          <li><a href="#">项目合作</a></li>
+          <li><a href="#">投资合作</a></li>
+          <li><a href="#">合作伙伴</a></li>
+          <li><a href="#">商务合作</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h3>网站</h3>
+        <ul>
+          <li><a href="#">RSS订阅</a></li>
+          <li><a href="#">投稿指南</a></li>
+          <li><a href="#">网站帮助</a></li>
+          <li><a href="#">友情链接</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h3>信息</h3>
+        <ul>
+          <li><a href="#">更新列表</a></li>
+          <li><a href="#">BUG反馈</a></li>
+          <li><a href="#">技术讨论</a></li>
+          <li><a href="#">教程咨询</a></li>
+        </ul>
+      </div>
+      <div class="ft-intro">
+        <p>
+          ThinkPHP 是一个免费开源的，快速、简单的面向对象的 轻量级PHP开发框架
+          ，创立于2006年初，遵循Apache2开源协议发布，是为了敏捷WEB应用开发和简化企业应用开发而诞生的。ThinkPHP从诞生以来一直秉承简洁实用的设计原则，在保持出色的性能和至简的代码的同时，也注重易用性。并且拥有众多的原创功能和特性，在社区团队的积极参与下，在易用性、扩展性和性能方面不断优化和改进，已经成长为国内最领先和最具影响力的WEB应用开发框架，众多的典型案例确保可以稳定用于商业以及门户级的开发。
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

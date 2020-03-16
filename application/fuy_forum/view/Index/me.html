@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>首页</title>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="__CSS__/head.css">
+  <link rel="stylesheet" href="__CSS__/contact.css">
+  <link rel="stylesheet" href="__CSS__/foot.css">
+</head>
+<style type="text/css">
+  .hid {
+    display: '';
+  }
+</style>
+<!-- <script type="text/javascript">
+  window.onload=function(e){
+    var lis = document.getElementsByClassName('showHidden');
+    var rDivs = document.getElementsByClassName("rt-detail");
+    for (let i = 0; i < lis.length; i++) {
+        lis[i].onmouseover=function(){
+          rDivs[i].style.display = '';
+        }
+        lis[i].onmouseout = function(){
+          rDivs[i].style.display = 'none';
+        }
+      }
+
+    }
+</script> -->
+<script type="text/javascript">
+  window.onload = function () {
+    var lis = document.getElementsByClassName('showHidden');
+    var oDiv = document.getElementsByClassName('rt-detail');
+
+    // for (let i = 0; i < lis.length; i++) {
+    //   lis[i].onclick =function(){
+    //     for (let i = 0; i < lis.length; i++) {
+    //       // statement
+    //       oDiv[i].style.display = 'none'
+    //     }
+    //     // oDiv[0].style.display = 'none';
+    //     // oDiv[1].style.display = 'none';
+    //     // oDiv[2].style.display = 'none';
+    //     oDiv[i].style.display = ''
+    //   }
+    // }
+    let oName = document.getElementsByClassName('welName')[0];
+    if (oName.innerHTML.length <= 4) {
+      oName.style.display = 'none';
+    }
+    else {
+      oName.style.display = ''
+    }
+  }
+</script>
+
+<body>
+  <div class="header" >
+    <div id="head" class="dropdown">
+      <ul class="main-nav">
+        <li><img src="__IMG__/logo2.png.jpg" width="60px" height="60px" title="ThinkPhp"></li>
+        <li>
+          <a href="{:url('fuy_forum/index/index')}">首页</a>
+        </li>
+        <li class="dropdownCss">
+          <a>论坛</a>
+          <div class="dropdown-contentCss">
+            {volist name='save' id = 'saveRow'}
+            <a href="{:url('fuy_forum/index/view',['sid'=>$saveRow.sid])}" style="color: yellowgreen">
+              {$saveRow.sname}
+            </a>
+            {/volist}
+          </div>
+        </li>
+        <li>
+          <a href="{:url('fuy_forum_admin/admin/alogin')}">帖子管理</a>
+        </li>
+        <li>
+          <a href="{:url('index/me')}">上传头像</a>
+        </li>
+        <li>
+          <a href="{:url('user/contact','sid=2&pid=1')}">联系我们</a>
+        </li>
+        <li>
+          <a href="{:url('index/changepa')}">修改密码</a>
+        </li>
+        <li>
+          <a>案例</a>
+        </li>
+      </ul>
+      <!-- 搜索栏 -->
+      <div class="search">
+        <input type="text" placeholder="搜索">
+        <input type="submit" class="btn btn-primary" value="搜索">
+      </div>
+      <!-- 登录 -->
+      <div class="dropdown user ">
+        <i class="welName" style='color:skyblue'>欢迎您：{$Think.session.name}</i>
+        <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">
+          <img src="__IMG__/portrait/{$Think.session.look}" style="width:14px;height:16px;">
+          <b class="glyphicon glyphicon-user"></b>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu1">
+          <li role="presentation" style="width: 100%">
+            <!-- <a role="menuitem" tabindex="-1" href="#"></a> -->
+            <a role="menuitem" tabindex="-1" href="{:url('fuy_forum/user/login')}">登录</a>
+          </li>
+          <li role="presentation" style="width: 100%">
+            <!-- <a role="menuitem" tabindex="-1" href="#">注册账号</a> -->
+            <a role="menuitem" tabindex="-1" href="{:url('fuy_forum/user/register')}">注册账号</a>
+          </li>
+          <li role="presentation" style="width: 100%">
+            <!-- <a role="menuitem" tabindex="-1" href="#">注册账号</a> -->
+            <a role="menuitem" tabindex="-1" href="{:url('index/logout')}">注销</a>
+          </li>
+        </ul>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+
+  <div class="clear"></div>
+
+
+  <div id="contact">
+    <div class="left">
+      <ul>
+        <li class="showHidden" style="background:#fff">
+          <strong href="#">上传限制</strong><br>
+          <span>仅支持JPEG/PNG/GIF</span>
+          <span>大小不超过100kb</span>
+        </li>
+      </ul>
+    </div>
+
+    <div id="rightDiv" class="right">
+      <form role="form" action="{:url('index/upMe')}" enctype="multipart/form-data" method="post">
+        <!-- <div class="form-group">
+        <label for="name">名称</label>
+        <input type="text" class="form-control" id="name" 
+             placeholder="请输入名称">
+      </div> -->
+        <div style="border-bottom:1px solid #333;padding-bottom:5px;">
+          <img src="__IMG__/portrait/{$Think.session.look}" alt="头像" style="height:30px;width:30px;">
+          <b>{$Think.session.name}</b>
+        </div>
+        <div class="form-group">
+          <label for="inputfile">文件输入</label>
+          <input type="file" id="inputfile" name="uImg">
+          <!-- <p class="help-block">这里是块级帮助文本的实例。</p> -->
+        </div>
+        <button type="submit" class="btn btn-primary">上传</button>
+      </form>
+    </div>
+    <div class="clear"></div>
+  </div>
+
+
+  <div class="footer">
+    <div class="ft-main">
+      <div class="ft-col">
+        <h3>我们</h3>
+        <ul>
+          <li><a href="#">关于我们</a></li>
+          <li><a href="#">公司动态</a></li>
+          <li><a href="#">联系我们</a></li>
+          <li><a href="#">免责声明</a></li>
+          <li><a href="#">加入我们</a></li>
+          <li><a href="#">捐赠我们</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h3>合作</h3>
+        <ul>
+          <li><a href="#">技术培训</a></li>
+          <li><a href="#">广告合作</a></li>
+          <li><a href="#">项目合作</a></li>
+          <li><a href="#">投资合作</a></li>
+          <li><a href="#">合作伙伴</a></li>
+          <li><a href="#">商务合作</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h3>网站</h3>
+        <ul>
+          <li><a href="#">RSS订阅</a></li>
+          <li><a href="#">投稿指南</a></li>
+          <li><a href="#">网站帮助</a></li>
+          <li><a href="#">友情链接</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h3>信息</h3>
+        <ul>
+          <li><a href="#">更新列表</a></li>
+          <li><a href="#">BUG反馈</a></li>
+          <li><a href="#">技术讨论</a></li>
+          <li><a href="#">教程咨询</a></li>
+        </ul>
+      </div>
+      <div class="ft-intro">
+        <p>
+          ThinkPHP 是一个免费开源的，快速、简单的面向对象的 轻量级PHP开发框架
+          ，创立于2006年初，遵循Apache2开源协议发布，是为了敏捷WEB应用开发和简化企业应用开发而诞生的。ThinkPHP从诞生以来一直秉承简洁实用的设计原则，在保持出色的性能和至简的代码的同时，也注重易用性。并且拥有众多的原创功能和特性，在社区团队的积极参与下，在易用性、扩展性和性能方面不断优化和改进，已经成长为国内最领先和最具影响力的WEB应用开发框架，众多的典型案例确保可以稳定用于商业以及门户级的开发。
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

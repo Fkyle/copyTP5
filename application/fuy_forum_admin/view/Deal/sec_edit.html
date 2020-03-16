@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>修改板块信息</title>
+</head>
+<link rel="stylesheet" href="__CSS__/deal.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<body>
+  <div id="main">
+    <div id="header">
+      <div class='welcome'>
+        <img src="__IMG__/logo.png" alt="logo" style="height: 26px;" />
+        <h3 style="display: inline-block;margin-right: 10px;">论坛后台管理</h3>
+        <span>欢迎您:{$Think.session.aname}</span>
+      </div>
+      <div class="bar">
+        <ul>
+          <li><a href="{:url('deal/mesDeal')}">帖子管理</a></li>
+          <li><a href="{:url('deal/userDeal')}">用户管理</a></li>
+          <li><a href="{:url('deal/secdeal')}">板块管理</a></li>
+          <li><a href="">回收站管理</a></li>
+          <li><a href="">广告管理</a></li>
+          <li><a href="{:url('adv/boxdeal')}">轮播图管理</a></li>
+          <li><a href="{:url('admin/apa')}">修改密码</a></li>
+          <li><a href="{:url('admin/aDoOut')}">注销</a></li>
+          <li><a href="{:url('fuy_forum/index/index')}">论坛前台</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <form action="{:url('deal/doSecEdit',['sid'=>input('sid')])}">
+        <label for="">原板块名称:</label>
+        <span>{$getSave.sname}</span> <br>
+        <label for="">新板块名称</label>
+        <input type="text" class="form-control" name="newSname"  value="{$getSave.sname}">
+        <label for="">原备注</label>
+        <span>{$getSave.sremark}</span> <br>
+        <label for="">新备注</label>
+        <input type="text" class="form-control" name="newSremark" value="{$getSave.sremark}">
+        <input type="submit" value="确认修改" class="form-control btn btn-info">
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

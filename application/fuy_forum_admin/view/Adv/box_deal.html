@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>轮播图</title>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="__CSS__/deal.css">
+  <link rel="stylesheet" href="__CSS__/head.css">
+  <link rel="stylesheet" href="__CSS__/contact.css">
+  <link rel="stylesheet" href="__CSS__/foot.css">
+</head>
+
+<body>
+  <div id="main">
+    <div id="header">
+      <div class='welcome'>
+        <img src="__IMG__/logo.png" alt="logo" style="height: 26px;" />
+        <h3 style="display: inline-block;margin-right: 10px;">论坛后台管理</h3>
+        <span>欢迎您:{$Think.session.aname}</span>
+      </div>
+      <div class="bar">
+        <ul>
+          <li><a href="{:url('deal/mesDeal')}">帖子管理</a></li>
+          <li><a href="{:url('deal/userDeal')}">用户管理</a></li>
+          <li><a href="{:url('deal/secdeal')}">板块管理</a></li>
+          <li><a href="">回收站管理</a></li>
+          <li><a href="">广告管理</a></li>
+          <li><a href="{:url('adv/boxdeal')}">轮播图管理</a></li>
+          <li><a href="{:url('admin/apa')}">修改密码</a></li>
+          <li><a href="{:url('admin/aDoOut')}">注销</a></li>
+          <li><a href="{:url('fuy_forum/index/index')}">论坛前台</a></li>
+        </ul>
+      </div>
+    </div>
+      <div id="contact">
+        <div class="left">
+          <ul>
+            <li class="showHidden" style="background:#fff">
+              <strong href="#">上传限制</strong><br>
+              <span>仅支持JPEG/PNG/GIF</span>
+              <span>大小不超过20M</span>
+            </li>
+          </ul>
+        </div>
+      
+        <div id="rightDiv" class="right">
+          <form role="form" action="{:url('adv/upBox')}" enctype="multipart/form-data" method="post">
+            <div class="form-group">
+              轮播图标题:<input type="text" class="form-control" name="catitle">
+              轮播图备注:<input type="text" class="form-control" name="caback">
+              轮播图mid:<input type="text" class="form-control" name="camid">
+              <label for="inputfile">文件上传</label>
+              <input type="file" id="inputfile" name="cImg">
+              <!-- <p class="help-block">这里是块级帮助文本的实例。</p> -->
+            </div>
+            <button type="submit" class="btn btn-primary">上传</button>
+          </form>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div id="slider">
+        {volist name="re" id="reRow"}
+        <div>
+          <img src="__IMG__/adv/{$reRow.cimg}">
+          <table class="table" style="width: 500px;">
+            <thead>
+              <tr>
+                <th>标题</th>
+                <th>文字介绍</th>
+                <th>指向mid</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td scope="row">{$reRow.ctitle}</td>
+                <td>{$reRow.cback}</td>
+                <td>{$reRow.mid}</td>
+                <td>
+                  <a href="{:url('adv/editImg',['cid'=>$reRow.cid])}">修改|</a>
+                  <a href="{:url('adv/carouselStart',['cid'=>$reRow.cid])}"><span class="passImg">审核通过|</span></a>
+                  <a href="{:url('adv/carouselPause',['cid'=>$reRow.cid])}"><span class="{$reRow.color}">暂停使用|</span></a>
+                  <a href="{:url('adv/carouselDel',['cid'=>$reRow.cid])}">删除</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        {/volist}
+      </div>
+      <script>
+        window.onload = function(){
+          let pauseColor = document.getElementsByClassName('1');
+          let startColor =document.getElementsByClassName('passImg');
+          for(let i=0;i<=pauseColor.length;i++){
+            if (pauseColor[i].className == '1') {
+              pauseColor[i].style.color = 'red'
+            }
+          }
+        }
+      </script>
+  </div>
+</body>
+<style>
+#slider{
+  display: flex;
+  flex-wrap: wrap;
+  width: 1080px;
+}
+#slider div{
+  flex:1;
+  margin-bottom: 10px;
+}
+#slider div img{
+  width: 500px;
+  height: 300px;
+}
+/* .passImg{
+  color:blue
+} */
+</style>
+</html>

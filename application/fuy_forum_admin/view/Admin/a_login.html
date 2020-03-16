@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Login</title>
+	<link rel="stylesheet" type="text/css" href="__CSS__/alogin.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+		integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+</head>
+
+<body>
+	<div class="login-box">
+		<h1>Admin</h1>
+		<form action="{:url('admin/aDoLogin')}" method="post">
+			<div class="textbox">
+				<i class="fas fa-user"></i>
+				<input type="text" placeholder="UserName" name="aUser">
+			</div>
+			<div class="textbox">
+				<i class="fas fa-user-lock"></i>
+				<input type="password" placeholder="password" name="aPasswd">
+			</div>
+			<input class="btn" type="submit" name="" value="Sign In">
+			</div>
+		</form>
+</body>
+
+</html>

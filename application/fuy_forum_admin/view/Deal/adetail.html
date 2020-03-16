@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="__CSS__/deal.css">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <title>帖子管理</title>
+</head>
+
+<body>
+  <div id="main">
+    <div id="header">
+      <div class='welcome'>
+        <img src="__IMG__/logo.png" alt="logo" style="height: 26px;" />
+        <h3 style="display: inline-block;margin-right: 10px;">论坛后台管理</h3>
+        <span>欢迎您:{$Think.session.aname}</span>
+      </div>
+      <div class="bar">
+        <ul>
+          <li><a href="{:url('deal/mesDeal')}">帖子管理</a></li>
+          <li><a href="{:url('deal/userDeal')}">用户管理</a></li>
+          <li><a href="{:url('deal/secdeal')}">板块管理</a></li>
+          <li><a href="">回收站管理</a></li>
+          <li><a href="">广告管理</a></li>
+          <li><a href="{:url('adv/boxdeal')}">轮播图管理</a></li>
+          <li><a href="{:url('admin/apa')}">修改密码</a></li>
+          <li><a href="{:url('admin/aDoOut')}">注销</a></li>
+          <li><a href="{:url('fuy_forum/index/index')}">论坛前台</a></li>
+      </div>
+    </div>
+
+    <table class="table table-hover table-striped">
+      <thead>
+        <tr>
+          <label class="text-danger">原贴</label>
+          <th>原贴标题</th>
+          <th>发布时间</th>
+          <th>作者</th>
+        </tr>
+      </thead>
+      <tbody>
+        {volist name='reMes' id='reMesRow'}
+        <tr>
+          <td class="text-primary">{$reMesRow.mtitle}</td>
+          <td>{$reMesRow.mcreateat | date="Y-m-d H:i:s",###}</td>
+          <td class='text-danger'>{$reMesRow.unick}</td>
+        </tr>
+        {/volist}
+      </tbody>
+    </table>
+    <hr>
+    <table class="table table-hover table-striped">
+      <thead>
+        <tr>
+          <label class="text-danger">回复</label>
+          <th>回复内容</th>
+          <th>发布时间</th>
+          <th>作者</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {volist name='reRes' id='reResRow'}
+        <tr>
+          <td><a href="{:url('deal/adetail',['mid'=>$reResRow.mid])}">{$reResRow.rcontent}</a></td>
+          <td>{$reResRow.rcreateat | date="Y-m-d H:i:s",###}</td>
+          <td class='text-danger'>{$reResRow.unick}</td>
+          <td><a href="{:url('deal/resdel',['rid'=>$reResRow.rid])}">直接删除</a>| <a href="#">回收站</a></td>
+        </tr>
+        {/volist}
+      </tbody>
+    </table>
+    {$page}
+  </div>
+</body>
+
+</html>

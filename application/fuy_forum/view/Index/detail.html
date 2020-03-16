@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>首页</title>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="__CSS__/head.css">
+  <link rel="stylesheet" href="__CSS__/home.css">
+  <link rel="stylesheet" href="__CSS__/foot.css">
+</head>
+<script type="text/javascript">
+  window.onload = function () {
+    var texts = document.getElementsByClassName('replay');
+    var rep = document.getElementsByClassName('reply');
+
+    for (let i = 0; i < rep.length; i++) {
+      rep[i].onclick = function () {
+        console.log('2');
+        for (let i = 0; i < rep.length; i++) {
+          texts[i].style.display = 'none';
+        }
+        texts[i].style.display = '';
+      }
+    }
+    let oName = document.getElementsByClassName('welName')[0];
+    if (oName.innerHTML.length <= 4) {
+      oName.style.display = 'none';
+    }
+    else {
+      oName.style.display = ''
+    }
+// -------------------------------------------------------------------------------
+//处理url地址
+    function getUrlSearch(name) {
+      // 未传参，返回空
+      if (!name) return null;
+      // 查询参数：先通过search取值，如果取不到就通过hash来取
+      var after = window.location.search;
+      after = after.substr(1) || window.location.hash.split('?')[1];
+      // 地址栏URL没有查询参数，返回空
+      if (!after) return null;
+      // 如果查询参数中没有"name"，返回空
+      if (after.indexOf(name) === -1) return null;
+
+      var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+      // 当地址栏参数存在中文时，需要解码，不然会乱码
+      var r = decodeURI(after).match(reg);
+      // 如果url中"name"没有值，返回空
+      if (!r) return null;
+
+      return r[2];
+    }
+
+
+    oDiv=document.getElementById('cont');
+    para = getUrlSearch('page');
+    if(para == null || para == 1){
+      oDiv.style.display=''
+    }
+    else{
+      oDiv.style.display='none'
+    }
+  }
+
+</script>
+
+<body>
+  <div class="header" >
+    <div id="head" class="dropdown">
+      <ul class="main-nav">
+        <li><img src="__IMG__/logo2.png.jpg" width="60px" height="60px" title="ThinkPhp"></li>
+        <li>
+          <a href="{:url('fuy_forum/index/index')}">首页</a>
+        </li>
+        <li class="dropdownCss">
+          <a>论坛</a>
+          <div class="dropdown-contentCss">
+            {volist name='save' id = 'saveRow'}
+            <a href="{:url('fuy_forum/index/view',['sid'=>$saveRow.sid])}" style="color: yellowgreen">
+              {$saveRow.sname}
+            </a>
+            {/volist}
+          </div>
+        </li>
+        <li>
+          <a href="{:url('fuy_forum_admin/admin/alogin')}">帖子管理</a>
+        </li>
+        <li>
+          <a href="{:url('index/me')}">上传头像</a>
+        </li>
+        <li>
+          <a href="{:url('user/contact','sid=2&pid=1')}">联系我们</a>
+        </li>
+        <li>
+          <a href="{:url('index/changepa')}">修改密码</a>
+        </li>
+        <li>
+          <a>案例</a>
+        </li>
+      </ul>
+      <!-- 搜索栏 -->
+      <div class="search">
+        <input type="text" placeholder="搜索">
+        <input type="submit" class="btn btn-primary" value="搜索">
+      </div>
+      <!-- 登录 -->
+      <div class="dropdown user ">
+        <i class="welName" style='color:skyblue'>欢迎您：{$Think.session.name}</i>
+        <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">
+          <img src="__IMG__/portrait/{$Think.session.look}" style="width:14px;height:16px;">
+          <b class="glyphicon glyphicon-user"></b>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu1">
+          <li role="presentation" style="width: 100%">
+            <!-- <a role="menuitem" tabindex="-1" href="#"></a> -->
+            <a role="menuitem" tabindex="-1" href="{:url('fuy_forum/user/login')}">登录</a>
+          </li>
+          <li role="presentation" style="width: 100%">
+            <!-- <a role="menuitem" tabindex="-1" href="#">注册账号</a> -->
+            <a role="menuitem" tabindex="-1" href="{:url('fuy_forum/user/register')}">注册账号</a>
+          </li>
+          <li role="presentation" style="width: 100%">
+            <!-- <a role="menuitem" tabindex="-1" href="#">注册账号</a> -->
+            <a role="menuitem" tabindex="-1" href="{:url('index/logout')}">注销</a>
+          </li>
+        </ul>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="home bg-warning">
+    <div class="main">
+      <div class="Rleft">
+        <p style="text-align: center;color: skyblue;font-weight: bold;font-size: 25px">板块名：{$reMes.sname}</p>
+        <h1 style="text-align: center;border-bottom: 1px solid black;padding-bottom: 15px;color: brown">
+          帖子名：{$reMes.mtitle}
+        </h1>
+        <div class="lt-1">
+          <!-- <img src="__IMG__/main1.jpg"> -->
+          <div class="post-hot">
+            <ul>
+              <li><a href="#">讨论去发帖须知[新手必看] <span>12-22</span></a></li>
+              <li><a href="#">ThinkPHP5系列发布安全更新 <span>12-12</span></a></li>
+              <li><a href="#">ThinkPHP6系列发布安全更新 <span>11-22</span></a></li>
+              <li><a href="#">营销号,一律封号处理 <span>05-22</span></a></li>
+            </ul>
+            <span class="ding"><img src="__IMG__/ding.png"></span>
+          </div>
+          <div id="cont"  style="border:1px solid blue" >
+            <p style="text-indent: 2em;font-size: 22px;">{$reMes.mcontent}</p>
+            <span style="color: skyblue">时间：{$reMes.mcreateat | date='Y/m/d',###}</span>
+          </div>
+        </div>
+        <div class="lt-2">
+
+
+        </div>
+        <div class="clear"></div>
+        <img src="__IMG__/main7.png" alt="">
+        <div class="lt-2">
+          {$pages}
+          <div class="lt-title">
+            <ul>
+              <li><a href="#">评论</a></li>
+              <li><a href="#">相关</a></li>
+            </ul>
+          </div>
+          <div class="clear"></div>
+          <div class="list">
+            <ul>
+              {volist name='reRes' id="reRes_row">}
+              <li>
+                <img src="__IMG__/portrait/{$reRes_row.uimg}">
+                <div style="display:inline-block;" style="margin-top:2px;">
+                  <span>作者：{$reRes_row.unick}</span>
+                  <span>回复时间：{$reRes_row.rcreateat|date='Y-m-d',###}</span><br>
+                  <span>{$reRes_row.rcontent}</span>
+                </div>
+                <div class="detail">
+                  <input type="submit" value="回复" class="reply btn btn-primary">
+                </div>
+              </li>
+              {/volist}
+              <hr>
+              {egt name="Think.session.name" value="5"}
+              <form action="{:url('index/doRes',['mid'=>input('mid')])}  ">
+                <li>
+                  <img src="__IMG__/portrait/{$Think.session.look}" alt="">
+                  <textarea
+                    style="width: 630px;height: 35px; margin-left: 5px; border-top: 1px solid yellowgreen;position: relative;top: 15px;left: 0"
+                    name="resContent"></textarea><br>
+                  <input class="btn btn-primary" type="submit" value="评论" style="width: 100%;margin-top: 10px">
+                </li>
+              </form>
+              {/egt}
+            </ul>
+
+          </div>
+          {$pages}
+        </div>
+      </div>
+
+
+      <div class="Rright">
+        <div class="rt-post" style="background:#fcf8e3">
+          <img src="__IMG__/portrait/{$reMes.uimg}" style="width:66px;height:66px;">
+          <b>Athor:</b>{$reMes.unick}
+        </div>
+
+        <div class="intro">
+          <ul>
+            <li><a href="#">ThinkPHP5.0.24核心板</a></li>
+            <li><a href="#">ThinkPHP5.0.24核心板</a></li>
+            <li><a href="#">ThinkPHP5.0.24核心板</a></li>
+            <li><a href="#">ThinkPHP5.0.24核心板</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="ft-main">
+      <div class="ft-col">
+        <h3>我们</h3>
+        <ul>
+          <li><a href="#">关于我们</a></li>
+          <li><a href="#">公司动态</a></li>
+          <li><a href="#">联系我们</a></li>
+          <li><a href="#">免责声明</a></li>
+          <li><a href="#">加入我们</a></li>
+          <li><a href="#">捐赠我们</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h3>合作</h3>
+        <ul>
+          <li><a href="#">技术培训</a></li>
+          <li><a href="#">广告合作</a></li>
+          <li><a href="#">项目合作</a></li>
+          <li><a href="#">投资合作</a></li>
+          <li><a href="#">合作伙伴</a></li>
+          <li><a href="#">商务合作</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h3>网站</h3>
+        <ul>
+          <li><a href="#">RSS订阅</a></li>
+          <li><a href="#">投稿指南</a></li>
+          <li><a href="#">网站帮助</a></li>
+          <li><a href="#">友情链接</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h3>信息</h3>
+        <ul>
+          <li><a href="#">更新列表</a></li>
+          <li><a href="#">BUG反馈</a></li>
+          <li><a href="#">技术讨论</a></li>
+          <li><a href="#">教程咨询</a></li>
+        </ul>
+      </div>
+      <div class="ft-intro">
+        <p>
+          ThinkPHP 是一个免费开源的，快速、简单的面向对象的 轻量级PHP开发框架
+          ，创立于2006年初，遵循Apache2开源协议发布，是为了敏捷WEB应用开发和简化企业应用开发而诞生的。ThinkPHP从诞生以来一直秉承简洁实用的设计原则，在保持出色的性能和至简的代码的同时，也注重易用性。并且拥有众多的原创功能和特性，在社区团队的积极参与下，在易用性、扩展性和性能方面不断优化和改进，已经成长为国内最领先和最具影响力的WEB应用开发框架，众多的典型案例确保可以稳定用于商业以及门户级的开发。
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

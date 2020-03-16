@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>修改图片内容</title>
+</head>
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="__CSS__/deal.css">
+<link rel="stylesheet" href="__CSS__/head.css">
+<link rel="stylesheet" href="__CSS__/contact.css">
+<link rel="stylesheet" href="__CSS__/foot.css">
+
+<body>
+  <div id="main">
+    <div id="header">
+      <div class='welcome'>
+        <img src="__IMG__/logo.png" alt="logo" style="height: 26px;" />
+        <h3 style="display: inline-block;margin-right: 10px;">论坛后台管理</h3>
+        <span>欢迎您:{$Think.session.aname}</span>
+      </div>
+      <div class="bar">
+        <ul>
+          <li><a href="{:url('deal/mesDeal')}">帖子管理</a></li>
+          <li><a href="{:url('deal/userDeal')}">用户管理</a></li>
+          <li><a href="{:url('deal/secdeal')}">板块管理</a></li>
+          <li><a href="">回收站管理</a></li>
+          <li><a href="">广告管理</a></li>
+          <li><a href="{:url('adv/boxdeal')}">轮播图管理</a></li>
+          <li><a href="{:url('admin/apa')}">修改密码</a></li>
+          <li><a href="{:url('admin/aDoOut')}">注销</a></li>
+          <li><a href="{:url('fuy_forum/index/index')}">论坛前台</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <img src="__IMG__/adv/{$re.cimg}" alt="" style="width: 1080px;height: 500px;">
+      <form role="form" action="{:url('adv/doEditImg',['cid'=>input('cid')])}" enctype="multipart/form-data" method="post">
+        <div class="form-group">
+          轮播图标题:<input type="text" class="form-control" name="retitle" value="{$re.ctitle}">
+          轮播图备注:<input type="text" class="form-control" name="reback" value="{$re.cback}">
+          轮播图mid:<input type="text" class="form-control" name="remid" value="{$re.mid}">
+          <!-- <label for="inputfile">文件上传</label>
+          <input type="file" id="inputfile" name="cImg"> -->
+          <!-- <p class="help-block">这里是块级帮助文本的实例。</p> -->
+        </div>
+        <button type="submit" class="btn btn-primary">修改</button> 
+      </form>
+    </div>
+  </div>
+</body>
+</html>
